@@ -1,4 +1,6 @@
-{ response: {
+require "pry-nav"
+
+articles = { response: {
   status: "ok",
   userTier: "developer",
   total: 9772,
@@ -101,3 +103,24 @@
   }
   ]}
   }
+
+articles[:response][:results].each do |article|
+  article[:views] = 0
+end
+
+def read_article(articles)
+  random = rand(articles[:response][:results].length-1)
+  selected = articles[:response][:results][random]
+  articles[:response][:results][random][:views] += 1
+  puts "#{selected[:webTitle]}\nViews: #{selected[:views]}"
+end
+
+def display_views(articles)
+  articles[:response][:results].each do |article|
+    puts "#{article[:webTitle]}\nViews: #{article[:views]}"
+  end
+end
+
+read_article(articles)
+
+binding pry
